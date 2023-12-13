@@ -1,0 +1,14 @@
+SELECT 
+c.first_name || ' ' || c.last_name as customer_name,
+COUNT(i.invoice_id) as number_of_purchases,
+SUM(i.total) as total_spent,
+CASE
+WHEN SUM(i.total) < 40 THEN "small spender"
+WHEN SUM(i.total) > 100 THEN "big spender"
+ELSE "regular"
+END
+as customer_category
+FROM customer as c 
+INNER JOIN invoice as i ON i.customer_id=c.customer_id
+GROUP BY 1
+ORDER BY 1;
